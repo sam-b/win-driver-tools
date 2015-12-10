@@ -1,3 +1,7 @@
+"""
+	Bruteforces valid ioctl codes and provides definitions for them when setup with valid config to send them to a driver.
+"""
+
 import sys
 import time
 try:

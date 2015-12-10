@@ -1,7 +1,28 @@
 import sys
 
 help = """
-You gone fucked up.
+	python translate.py $mode
+	Translate an ioctl code in hex to its equivalent c define:
+		python translate.py (c | code) hex_code
+	Example:
+		>python translate.py c 0x22e00b
+		Device =  FILE_DEVICE_UNKNOWN
+		Device Source =  VENDOR
+		Function =  0x802
+		Method =  METHOD_NEITHER
+		Access =  FILE_READ_DATA | FILE_WRITE_DATA
+		C Define:
+		#define NAME CTL_CODE(FILE_DEVICE_UNKNOWN,0x802,METHOD_NEITHER,FILE_READ_DATA |
+FILE_WRITE_DATA)
+	Translate the definition dword values in hex to a hex ioctl code:
+		python translate.py (d | dwords)
+	Example:
+		
+	Translate the Macro C constants inputs to an ioctl code:
+		python translate.py (s | string)
+	Example:
+		>python translate.py s FILE_DEVICE_UNKNOWN 0x802 METHOD_NEITHER "FILE_READ_DATA | FILE_WRITE_DATA"
+		Outputs: 0x22e00b	
 """
 
 device_types = [
@@ -81,7 +102,7 @@ def ctl_code(device_type, function, method, access):
 	return (device_type << 16) | (access << 14) | function << 2 | method
 
 def device_source(ioctl):
-	if ((ioctl & 0xffff0000) >> 16) < 0x800:
+	if ((ioctl & 0x3FFC) >> 2) < 0x800:
 		return "MS"
 	return "VENDOR"
 
