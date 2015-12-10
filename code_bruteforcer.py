@@ -35,6 +35,6 @@ if __name__ == "__main__":
 						print c_define_from_ioctl(ioctl)
 					except Exception as e:
 						if e[0] == 998:
-							print "Found ioctl triggered out of bounds memory access: " + hex(ioctl) + " , C define:"
+							print "Found ioctl triggered invalid memory access: " + hex(ioctl) + " , C define:"
 							print c_define_from_ioctl(ioctl)
 						pass
