@@ -6,20 +6,20 @@ help = """
 		python translate.py (c | code) hex_code
 	Example:
 		>python translate.py c 0x22e00b
-		Device =  FILE_DEVICE_UNKNOWN
+		DeviceCode =  FILE_DEVICE_UNKNOWN
 		Device Source =  VENDOR
-		Function =  0x802
-		Method =  METHOD_NEITHER
-		Access =  FILE_READ_DATA | FILE_WRITE_DATA
+		FunctionCode =  0x802
+		MethodCode =  METHOD_NEITHER
+		AccessCode =  FILE_READ_DATA | FILE_WRITE_DATA
 		C Define:
-		#define NAME CTL_CODE(FILE_DEVICE_UNKNOWN,0x802,METHOD_NEITHER,FILE_READ_DATA |
-FILE_WRITE_DATA)
+		#define NAME CTL_CODE(FILE_DEVICE_UNKNOWN,0x802,METHOD_NEITHER,FILE_READ_DATA | FILE_WRITE_DATA)
 	Translate the definition dword values in hex to a hex ioctl code:
-		python translate.py (d | dwords)
+		python translate.py (d | dwords) DeviceCode FunctionCode MethodCode AccessCode
 	Example:
-		
+		>python translate.py d 0x22 0x802 0x3 0x3
+		0x22e00b
 	Translate the Macro C constants inputs to an ioctl code:
-		python translate.py (s | string)
+		python translate.py (s | string) DeviceCode FunctionCode MethodCode AccessCode
 	Example:
 		>python translate.py s FILE_DEVICE_UNKNOWN 0x802 METHOD_NEITHER "FILE_READ_DATA | FILE_WRITE_DATA"
 		Outputs: 0x22e00b	
@@ -148,18 +148,18 @@ if __name__ == "__main__":
 		device = device_from_ioctl(ioctl)
 		access = access_from_ioctl(ioctl)
 		function = function_from_ioctl(ioctl)
-		print "Device = ", device
+		print "DeviceCode = ", device
 		print "Device Source = ", device_source(ioctl)
-		print "Function = ", function
-		print "Method = ", method
-		print "Access = ", access
+		print "FunctionCode = ", function
+		print "MethodCode = ", method
+		print "AccessCode = ", access
 		print "C Define:"
 		print "#define NAME CTL_CODE(" + device + "," + function + "," + method + "," + access + ")"
 	elif mode == "d" or mode == "dwords":
 		if len(sys.argv) < 6:
 			print help
 			sys.exit(1)
-		print ctl_code(int(sys.argv[2],16),int(sys.argv[3],16),int(sys.argv[4],16),int(sys.argv[5],16))
+		print hex(ctl_code(int(sys.argv[2],16),int(sys.argv[3],16),int(sys.argv[4],16),int(sys.argv[5],16)))
 	elif mode == "s" or mode == "strings":
 		if len(sys.argv) < 6:
 			print help
