@@ -23,6 +23,8 @@ A couple of little tools I've made for working with Windows Drivers
 	Example:
 		>python translate.py s FILE_DEVICE_UNKNOWN 0x802 METHOD_NEITHER "FILE_READ_DATA | FILE_WRITE_DATA"
 		Outputs: 0x22e00b
+![translate screenshot](screenshots/translate_example.PNG)
 ## code_bruteforcer.py
 	Bruteforces valid ioctl codes and provides definitions for them when setup with valid config to send them to a driver.   
 	Correct settings will need to be added as arguments to the CreateFile call.
+![bruteforce screenshot](screenshots/bruteforce_example.PNG)
