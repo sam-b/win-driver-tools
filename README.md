@@ -28,3 +28,7 @@ A couple of little tools I've made for working with Windows Drivers
 	Bruteforces valid ioctl codes and provides definitions for them when setup with valid config to send them to a driver.   
 	Correct settings will need to be added as arguments to the CreateFile call.
 ![bruteforce screenshot](screenshots/bruteforce_example.PNG)
+## basic_fuzzer.py
+	Fuzzes a given IOCTL for a given device path by sending random input and output buffers, half the time the sizes passed with buffers will be valid and half the time not.
+	Usage: python basic_fuzzer.py DRIVER_PATH_INCLUDING_ESCAPES IOCTL_CODE_IN_HEX
+	Logs all sent DeviceIOControls to fuzz.log
